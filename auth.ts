@@ -3,7 +3,7 @@ import type { NextAuthConfig } from 'next-auth';
 import NextAuth from 'next-auth';
 import Spotify from 'next-auth/providers/spotify';
 
-const config: NextAuthConfig = {
+const config = {
 	providers: [
 		Spotify({
 			clientId: process.env.AUTH_SPOTIFY_ID!,
@@ -38,6 +38,6 @@ const config: NextAuthConfig = {
 	pages: {
 		signIn: '/login',
 	},
-};
+} satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
