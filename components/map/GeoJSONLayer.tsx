@@ -19,8 +19,6 @@ export default function GeoJSONLayer({
 
 	useEffect(() => {
 		const map = mapRef.current;
-		console.log('[GeoJSONLayer] useEffect, map:', !!map, 'data:', !!data);
-
 		if (!map) {
 			console.warn('[GeoJSONLayer] mapa não disponível');
 			return;
@@ -34,7 +32,6 @@ export default function GeoJSONLayer({
 
 		// Remove camada anterior
 		if (layerRef.current) {
-			console.log('[GeoJSONLayer] removendo camada anterior');
 			map.removeLayer(layerRef.current);
 			layerRef.current = null;
 		}
@@ -53,7 +50,6 @@ export default function GeoJSONLayer({
 						feature.properties?.name ||
 						feature.properties?.ADM0_A3 ||
 						'desconhecido';
-					// console.log('[GeoJSONLayer] adicionando país:', countryName); // pode poluir o console, remova se necessário
 
 					layer.bindTooltip(feature.properties?.name || '', {
 						permanent: false,
@@ -101,7 +97,6 @@ export default function GeoJSONLayer({
 		}
 
 		return () => {
-			console.log('[GeoJSONLayer] cleanup');
 			if (layerRef.current && map) {
 				map.removeLayer(layerRef.current);
 				layerRef.current = null;

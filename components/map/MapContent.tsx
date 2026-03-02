@@ -4,11 +4,12 @@ import countriesGeo from '@/data/countries.geo.json';
 import type { CountryFeatureCollection } from '@/types/map';
 import dynamic from 'next/dynamic';
 
-// Asserção segura: primeiro unknown, depois o tipo desejado
 const geoJsonData = countriesGeo as unknown as CountryFeatureCollection;
 
-console.log('[MapContent] GeoJSON carregado:', countriesGeo ? 'Sim' : 'Não');
-console.log('[MapContent] Número de features:', geoJsonData.features?.length);
+console.log(
+	'[MapContent] GeoJSON carregado. Features:',
+	geoJsonData.features?.length,
+);
 const first = geoJsonData.features?.[0];
 if (first) {
 	console.log('[MapContent] Exemplo de propriedades:', first.properties);
@@ -33,9 +34,6 @@ const CountryDetailsPanel = dynamic(
 	() => import('@/components/map/CountryDetailsPanel'),
 	{ ssr: false },
 );
-const MobileDrawer = dynamic(() => import('@/components/map/MobileDrawer'), {
-	ssr: false,
-});
 
 export default function MapContent() {
 	return (
@@ -50,7 +48,6 @@ export default function MapContent() {
 				</div>
 			</div>
 			<CountryDetailsPanel />
-			<MobileDrawer />
 		</div>
 	);
 }

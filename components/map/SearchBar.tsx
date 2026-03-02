@@ -13,7 +13,6 @@ export default function SearchBar() {
 	const wrapperRef = useRef<HTMLDivElement>(null);
 	const { mapRef } = useMap();
 
-	// Fecha sugestões ao clicar fora
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			if (
@@ -47,6 +46,7 @@ export default function SearchBar() {
 	const selectCountry = (code: string) => {
 		const country = COUNTRY_BY_CODE[code];
 		if (country && mapRef.current) {
+			console.log('[SearchBar] voando para:', country.name);
 			mapRef.current.flyTo([country.lat, country.lng], country.zoom);
 			setQuery('');
 			setSuggestions([]);
@@ -75,7 +75,7 @@ export default function SearchBar() {
 							<li
 								key={country.code}
 								onMouseDown={(e) => {
-									e.preventDefault(); // evita que o input perca o foco antes do clique
+									e.preventDefault();
 									selectCountry(country.code);
 								}}
 								className='cursor-pointer px-3 py-2 text-sm transition-colors hover:bg-teal-900/50'

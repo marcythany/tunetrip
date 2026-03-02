@@ -5,7 +5,6 @@ import L from 'leaflet';
 import { useEffect, useMemo, useRef } from 'react';
 import { useMap } from './MapProvider';
 
-// Corrige ícones
 type IconDefaultWithGetIconUrl = L.Icon.Default & { _getIconUrl?: string };
 delete (L.Icon.Default.prototype as IconDefaultWithGetIconUrl)._getIconUrl;
 
@@ -25,12 +24,10 @@ export default function LeafletMap({
 	const mapContainer = useRef<HTMLDivElement>(null);
 	const { mapRef, setViewport } = useMap();
 
-	// 🔒 Estabiliza os valores iniciais para evitar recriações
 	const initialCenter = useMemo(() => initialCenterProp, []);
 	const initialZoom = useMemo(() => initialZoomProp, []);
 
 	useEffect(() => {
-		console.log('[LeafletMap] useEffect montando...');
 		if (!mapContainer.current) {
 			console.warn('[LeafletMap] mapContainer.current é null');
 			return;
@@ -51,7 +48,6 @@ export default function LeafletMap({
 
 			mapRef.current = instance;
 
-			// Atualiza viewport inicial (apenas uma vez)
 			const bounds = instance.getBounds();
 			setViewport({
 				center: initialCenter as [number, number],
@@ -74,7 +70,6 @@ export default function LeafletMap({
 						_northEast: bounds.getNorthEast(),
 					},
 				});
-				console.log('[LeafletMap] moveend', { center, zoom });
 			};
 
 			instance.on('moveend', handleMoveEnd);

@@ -1,29 +1,25 @@
+// types/map.ts
 import type { Feature, FeatureCollection } from 'geojson';
-import type {
-	LatLngExpression,
-	Map as LeafletMap,
-	LeafletMouseEvent,
-} from 'leaflet';
-import type { RefObject } from 'react';
-
-// ------------------------------------------------------------
-// Tipos para países e features do GeoJSON
-// ------------------------------------------------------------
+import type { LatLngExpression, LeafletMouseEvent } from 'leaflet';
 
 /**
  * Propriedades de um país no GeoJSON.
  * Compatível com o arquivo countries.geo.json esperado.
  */
 export interface CountryProperties {
-	ADM0_A3: string;
-	/** Código do país ISO 3166-1 alpha-2 (ex: 'BR', 'US') */
-	code: string;
+	/** Código do país ISO 3166-1 alpha-2 (ex: 'BR', 'US') – pode vir como 'iso_a2' no GeoJSON */
+	code?: string;
+	/** Código ISO alpha-2 (campo presente no Natural Earth) */
+	iso_a2?: string;
+	/** Código ISO alpha-3 (presente no Natural Earth) */
+	ADM0_A3?: string;
 	/** Nome do país em português (ou inglês) */
 	name: string;
 	/** Região ou continente (opcional) */
 	region?: string;
 	/** População aproximada (opcional) */
 	population?: number;
+	// outros campos podem ser adicionados conforme necessidade
 }
 
 /**
@@ -38,7 +34,7 @@ export type CountryFeature = Feature<
  * Coleção de features GeoJSON (todo o mapa).
  */
 export type CountryFeatureCollection = FeatureCollection<
-	GeoJSON.Point | GeoJSON.Polygon | GeoJSON.MultiPolygon,
+	GeoJSON.Geometry,
 	CountryProperties
 >;
 
@@ -120,7 +116,7 @@ export type MapRef = Map | null;
  */
 export interface MapContextType {
 	/** Ref para a instância do mapa Leaflet (mutável) */
-	mapRef: RefObject<LeafletMap | null>;
+	mapRef: React.RefObject<MapRef>;
 	/** Viewport atual */
 	viewport: MapViewport;
 	/** Atualiza o viewport (ex: ao mover o mapa) */
@@ -156,12 +152,3 @@ export interface MapComponentProps {
 	/** Classes CSS adicionais para o container do mapa */
 	className?: string;
 }
-
-// ------------------------------------------------------------
-// Utilitários de tipo para coordenadas
-// ------------------------------------------------------------
-
-/**
- * Tupla [latitude, longitude] ou objeto {lat, lng}.
- */
-export type Coordinates = LatLngExpression;

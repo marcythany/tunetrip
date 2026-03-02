@@ -24,7 +24,6 @@ export function MapProvider({ children }: { children: React.ReactNode }) {
 	const [currentTileProvider, setCurrentTileProvider] =
 		useState<TileProviderConfig>(DEFAULT_TILE_PROVIDER);
 
-	// Log quando um país é selecionado
 	const selectCountry = (feature: CountryFeature | null) => {
 		console.log(
 			'[MapProvider] selectCountry:',
